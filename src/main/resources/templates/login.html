@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Finance</title>
+</head>
+<body>
+<form method="post" action="/login">
+    <div>
+        <label for="username">Username</label>
+        <input id="username" type="text" name="username"/>
+    </div>
+
+    <div>
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password"/>
+    </div>
+
+    <div>
+        <input id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+        <button type="submit">Войти</button>
+    </div>
+</form>
+<div>
+    <p>Еще нет аккаунт? Тогда <a href="/registration">зарегистрируйтесь</a></p>
+</div>
+</body>
+</html>

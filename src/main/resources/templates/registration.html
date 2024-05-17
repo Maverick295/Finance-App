@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Finance</title>
+</head>
+<body>
+<form action="/registration" method="post" th:object="${registrationForm}">
+    <div>
+        <label for="username">Никнейм</label>
+        <input id="username" type="text" th:field="*{username}"/>
+    </div>
+
+    <div>
+        <label for="password">Пароль</label>
+        <input id="password" type="password" th:field="*{password}"/>
+    </div>
+
+    <div>
+        <label for="phone">Номер телефона</label>
+        <input id="phone" type="tel" th:field="*{phone}"/>
+    </div>
+
+    <div>
+        <input id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+        <button type="submit">Зарегистрироваться</button>
+    </div>
+</form>
+<div>
+    <p>У вас уже есть аккаунт? <a href="/login">Войдите</a></p>
+</div>
+</body>
+</html>
