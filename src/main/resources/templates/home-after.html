@@ -2,9 +2,251 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'ZonaPro';
+            src: url('/fonts/ZonaPro-Regular.ttf') format('truetype');
+        }
+        body {
+            margin: 0;
+            font-family: 'ZonaPro', Arial, sans-serif;
+            background-color: #20363b;
+            color: #39d7de;
+        }
+        .navbar {
+            background-color: transparent !important;
+            border-bottom: none;
+            padding: 20px 0;
+            font-size: 1.2rem;
+        }
+        .navbar-brand {
+            color: #39d7de !important;
+            font-size: 2.5rem;
+            margin-left: 20px;
+        }
+        .navbar-nav .nav-link {
+            color: #39d7de !important;
+            border: 1px solid #39d7de;
+            border-radius: 50px;
+            padding: 10px 20px;
+            margin: 0 5px;
+        }
+        .navbar-nav .nav-link:hover {
+            background-color: #39d7de;
+            color: #20363b !important;
+        }
+        .navbar-nav {
+            margin-right: 20px;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            text-align: center;
+        }
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            text-align: center;
+            color: #fff;
+        }
+        .hero-text {
+            max-width: 600px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+        }
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #20363b;
+            color: #39d7de;
+            border-radius: 20px;
+            padding: 20px;
+        }
+        .modal-header, .modal-footer {
+            border: none;
+        }
+        .modal-header .close {
+            color: #39d7de;
+            font-size: 1.5rem;
+        }
+        .btn-primary, .btn-secondary {
+            background-color: #39d7de;
+            border: none;
+            color: #20363b;
+            border-radius: 50px;
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            background-color: #20363b;
+            color: #39d7de;
+            border: 1px solid #39d7de;
+        }
+        .form-check-input {
+            background-color: #20363b;
+            border: 1px solid #39d7de;
+        }
+        .form-check-label {
+            color: #39d7de;
+        }
+    </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">Finance</a>
+</nav>
+<div class="container-fluid hero">
+    <div class="hero-text">
+        <h1>Welcome back to the Finance Assistant</h1>
+        <button class="btn btn-secondary mt-4" id="viewSelectedBanksBtn">View Selected Banks</button>
+        <button class="btn btn-secondary mt-2" id="openBankSelectorBtn">Select Banks</button>
+    </div>
+</div>
 
+<!-- First Modal -->
+<div class="modal fade" id="bankSelectorModal" tabindex="-1" role="dialog" aria-labelledby="bankSelectorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bankSelectorModalLabel">Select Your Banks</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="bankForm">
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Сбербанк" id="sberbank">
+                            <label class="form-check-label" for="sberbank">
+                                Сбербанк
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Тинькофф" id="tinkoff">
+                            <label class="form-check-label" for="tinkoff">
+                                Тинькофф
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Альфа Банк" id="alfa">
+                            <label class="form-check-label" for="alfa">
+                                Альфа Банк
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="ВТБ" id="vtb">
+                            <label class="form-check-label" for="vtb">
+                                ВТБ
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveSelectionBtn">Save Selection</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Second Modal -->
+<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="authModalLabel">Authenticate with Selected Banks</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="authModalBody">
+                <!-- Authentication buttons will be inserted here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Third Modal for Viewing Selected Banks -->
+<div class="modal fade" id="viewBanksModal" tabindex="-1" role="dialog" aria-labelledby="viewBanksModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewBanksModalLabel">Selected Banks</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="viewBanksModalBody">
+                <!-- Selected banks will be displayed here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="addMoreBanksBtn">Add More Banks</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function(){
+        let selectedBanks = [];
+
+        $('#bankSelectorModal').modal('show');
+
+        $('#saveSelectionBtn').click(function(){
+            selectedBanks = [];
+            $('#bankForm input:checked').each(function(){
+                selectedBanks.push($(this).val());
+            });
+
+            if (selectedBanks.length > 0) {
+                var authButtons = '';
+                selectedBanks.forEach(function(bank){
+                    authButtons += '<button type="button" class="btn btn-primary btn-block">' + bank + ' - Авторизоваться</button>';
+                });
+                $('#authModalBody').html(authButtons);
+                $('#bankSelectorModal').modal('hide');
+                $('#authModal').modal('show');
+            } else {
+                alert('Please select at least one bank.');
+            }
+        });
+
+        $('#viewSelectedBanksBtn').click(function(){
+            if (selectedBanks.length > 0) {
+                var bankList = '<ul>';
+                selectedBanks.forEach(function(bank){
+                    bankList += '<li>' + bank + '</li>';
+                });
+                bankList += '</ul>';
+                $('#viewBanksModalBody').html(bankList);
+                $('#viewBanksModal').modal('show');
+            } else {
+                alert('No banks selected.');
+            }
+        });
+
+        $('#openBankSelectorBtn').click(function(){
+            $('#bankSelectorModal').modal('show');
+        });
+
+        $('#addMoreBanksBtn').click(function(){
+            $('#viewBanksModal').modal('hide');
+            $('#bankSelectorModal').modal('show');
+        });
+    });
+</script>
 </body>
 </html>

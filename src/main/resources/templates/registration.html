@@ -2,32 +2,151 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'ZonaPro';
+            src: url('/fonts/ZonaPro-Regular.ttf') format('truetype');
+        }
+        body {
+            margin: 0;
+            font-family: 'ZonaPro', Arial, sans-serif;
+            background-color: #20363b;
+            color: #39d7de;
+        }
+        .navbar {
+            background-color: transparent !important;
+            border-bottom: none;
+            padding: 20px 0;
+            font-size: 1.2rem;
+        }
+        .navbar-brand {
+            color: #39d7de !important;
+            font-size: 2.5rem;
+            margin-left: 20px;
+        }
+        .navbar-nav .nav-link {
+            color: #39d7de !important;
+            border: 1px solid #39d7de;
+            border-radius: 50px;
+            padding: 10px 20px;
+            margin: 0 5px;
+        }
+        .navbar-nav .nav-link:hover {
+            background-color: #39d7de;
+            color: #20363b !important;
+        }
+        .navbar-nav {
+            margin-right: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            text-align: center;
+        }
+        .register-form {
+            background-color: #20363b;
+            border: 2px solid #39d7de;
+            border-radius: 20px;
+            padding: 40px;
+            width: 400px;
+        }
+        .register-form input {
+            background-color: #20363b;
+            color: #39d7de;
+            border: 1px solid #39d7de;
+            border-radius: 10px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .register-form input::placeholder {
+            color: #39d7de;
+            opacity: 0.6;
+        }
+        .register-form button {
+            background-color: #39d7de;
+            color: #20363b;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            width: 100%;
+        }
+        .register-form button:hover {
+            background-color: #20363b;
+            color: #39d7de;
+            border: 1px solid #39d7de;
+        }
+        .register-form label {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        .login-link {
+            color: #39d7de;
+            margin-top: 20px;
+        }
+        .login-link a {
+            color: #39d7de;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        .input-group {
+            position: relative;
+        }
+        .input-group i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #39d7de;
+        }
+        .input-group input {
+            padding-left: 40px;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<form action="/registration" method="post" th:object="${registrationForm}">
-    <div>
-        <label for="username">Никнейм</label>
-        <input id="username" type="text" th:field="*{username}"/>
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">Finance</a>
+</nav>
+<div class="container">
+    <form class="register-form" action="/registration" method="post" th:object="${registrationForm}">
+        <div>
+            <label for="username">Никнейм</label>
+            <input id="username" type="text" th:field="*{username}" placeholder="Введите ваш никнейм" required/>
+        </div>
+        <div>
+            <label for="password">Пароль</label>
+            <input id="password" type="password" th:field="*{password}" placeholder="Введите ваш пароль" required/>
+        </div>
+        <div>
+            <label for="phone">Номер телефона</label>
+            <div class="input-group">
+                <i class="fas fa-phone"></i>
+                <input id="phone" type="tel" th:field="*{phone}" placeholder="Введите ваш номер телефона" required/>
+            </div>
+        </div>
+        <div>
+            <input id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+            <button type="submit">Зарегистрироваться</button>
+        </div>
+    </form>
+    <div class="login-link">
+        <p>У вас уже есть аккаунт? <a href="/login">Войдите</a></p>
     </div>
-
-    <div>
-        <label for="password">Пароль</label>
-        <input id="password" type="password" th:field="*{password}"/>
-    </div>
-
-    <div>
-        <label for="phone">Номер телефона</label>
-        <input id="phone" type="tel" th:field="*{phone}"/>
-    </div>
-
-    <div>
-        <input id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-        <button type="submit">Зарегистрироваться</button>
-    </div>
-</form>
-<div>
-    <p>У вас уже есть аккаунт? <a href="/login">Войдите</a></p>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
