@@ -11,12 +11,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -34,15 +37,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(@NotNull User user) {
         userRepository.save(user);
+        logger.log(Level.INFO, "Пользователь {0} успешно сохранен", user.getUsername());
     }
 
     @Override
     public User create(@NotNull RegistrationForm form) {
         return new User()
                 .setUsername(form.getUsername())
-                .setPassword(
-                        passwordEncoder.encode(form.getPassword())
-                )
+                .setPassword(passwordEncoder.encode(form.getPassword()))
                 .setRole(UserRole.USER.getAuthority())
                 .setPhone(form.getPhone())
                 .setEnable(true)
@@ -54,6 +56,11 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         return findByUsername(authentication.getName())
-                .orElseThrow(() -> new EntityNotFoundException("Неудалось найти пользовател с таким именем"));
+                .orElseThrow(() -> new EntityNotFoundException("Не удалось найти пользовател с таким именем"));
+    }
+
+    @Override
+    public void setApiToken(User user, String token) {
+        user.setApiToken(token);
     }
 }

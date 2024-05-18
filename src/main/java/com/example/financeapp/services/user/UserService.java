@@ -10,4 +10,5 @@ public interface UserService {
     void save(User user);
     User create(RegistrationForm form);
     User getAuthenticatedUser();
+    void setApiToken(User user, String token);
 }
