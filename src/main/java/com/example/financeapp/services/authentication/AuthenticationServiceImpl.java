@@ -8,9 +8,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
+    private static final Logger logger = Logger.getLogger(AuthenticationServiceImpl.class.getName());
+
     private final CustomUserDetailsService customUserDetailsService;
 
     @Autowired
@@ -29,6 +35,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         userDetails.getAuthorities()
                 )
         );
+
+        logger.log(Level.INFO, "Аутентификация пользователя {0} успешно установлена в ContextHolder", username);
     }
 
     @Override

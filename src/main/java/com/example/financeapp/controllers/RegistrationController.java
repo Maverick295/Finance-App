@@ -32,8 +32,7 @@ public class RegistrationController {
 
     @GetMapping
     public ModelAndView registrationForm() {
-        return new ModelAndView("registration")
-                .addObject("registrationForm", new RegistrationForm());
+        return new ModelAndView("registration");
     }
 
     @PostMapping
@@ -45,10 +44,8 @@ public class RegistrationController {
             return new ModelAndView("registration")
                     .addObject("registrationForm", new RegistrationForm());
         }
-
-        userService.save(
-                userService.create(form)
-        );
+        User authenticatedUser = userService.getAuthenticatedUser();
+        userService.save(authenticatedUser);
 
         return RedirectUtil.redirect("/login");
     }

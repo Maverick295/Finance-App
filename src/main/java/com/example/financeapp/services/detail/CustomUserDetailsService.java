@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(@NotNull String username) throws UsernameNotFoundException {
         User user = userService.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("Неудалось найти пользователя с таким именем"));
+                .orElseThrow(() -> new EntityNotFoundException("Не удалось найти пользователя с таким именем"));
 
         List<GrantedAuthority> roles = getAuthority(user);
 
