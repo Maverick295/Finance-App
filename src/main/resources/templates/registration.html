@@ -122,27 +122,27 @@
 <div class="container">
     <form class="register-form" action="/registration" method="post" th:object="${registrationForm}">
         <div>
-            <label for="username">Никнейм</label>
-            <input id="username" type="text" th:field="*{username}" placeholder="Введите ваш никнейм" required/>
+            <label for="username">Username</label>
+            <input id="username" type="text" th:field="*{username}" placeholder="Enter your username" required/>
         </div>
         <div>
-            <label for="password">Пароль</label>
-            <input id="password" type="password" th:field="*{password}" placeholder="Введите ваш пароль" required/>
+            <label for="password">Password</label>
+            <input id="password" type="password" th:field="*{password}" placeholder="Enter your password" required/>
         </div>
         <div>
-            <label for="phone">Номер телефона</label>
+            <label for="phone">Phone Number</label>
             <div class="input-group">
                 <i class="fas fa-phone"></i>
-                <input id="phone" type="tel" th:field="*{phone}" placeholder="Введите ваш номер телефона" required/>
+                <input id="phone" type="tel" th:field="*{phone}" placeholder="Enter your phone number" required/>
             </div>
         </div>
         <div>
             <input id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-            <button type="submit">Зарегистрироваться</button>
+            <button type="submit">Register</button>
         </div>
     </form>
     <div class="login-link">
-        <p>У вас уже есть аккаунт? <a href="/login">Войдите</a></p>
+        <p>Already have an account? <a href="/login">Log in</a></p>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

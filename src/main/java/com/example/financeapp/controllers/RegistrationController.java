@@ -32,7 +32,8 @@ public class RegistrationController {
 
     @GetMapping
     public ModelAndView registrationForm() {
-        return new ModelAndView("registration");
+        return new ModelAndView("registration")
+                .addObject("registrationForm", new RegistrationForm());
     }
 
     @PostMapping
@@ -41,8 +42,7 @@ public class RegistrationController {
             BindingResult result
     ) {
         if (result.hasErrors()) {
-            return new ModelAndView("registration")
-                    .addObject("registrationForm", new RegistrationForm());
+            return new ModelAndView("registration");
         }
         User authenticatedUser = userService.getAuthenticatedUser();
         userService.save(authenticatedUser);
