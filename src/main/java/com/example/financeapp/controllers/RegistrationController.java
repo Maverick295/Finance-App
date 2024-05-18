@@ -32,7 +32,8 @@ public class RegistrationController {
 
     @GetMapping
     public ModelAndView registrationForm() {
-        return new ModelAndView("registration");
+        return new ModelAndView("registration")
+                .addObject("registrationForm", new RegistrationForm());
     }
 
     @PostMapping
